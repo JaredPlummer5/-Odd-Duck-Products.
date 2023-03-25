@@ -29,6 +29,7 @@ function handleSubmit(event) {
   // TODO: Prevent the page from reloading
   event.preventDefault()
   // Do all the things ...
+  //addproductToCart();
   addSelectedItemToCart();
   state.cart.saveToLocalStorage();
   state.cart.updateCounter();
@@ -39,34 +40,34 @@ function handleSubmit(event) {
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
   // TODO: suss out the item picked from the select list
-  // let SelectedItem = document.querySelector("select").value
-  // for (let i = 0; i < state.allProducts.length; i++) {
-  //   if (state.allProducts[i].name === SelectedItem) {
-  //     let InputValueOfQuanity = document.getElementById("quantity").value
-  //     // TODO: get the quantity
-  //     // TODO: using those, add one item to the Cart
-  //     let UserAddedProduct = new CartItem(SelectedItem, InputValueOfQuanity)
-  //     console.log(UserAddedProduct)
-  //     state.cart.items.push(UserAddedProduct)
-  //     console.log(state.cart.items)
-  //   }
-  // }
+  let product = document.querySelector("select").value
+  for (let i = 0; i < state.allProducts.length; i++) {
+    if (state.allProducts[i].name === product) {
+      let quantity = document.getElementById("quantity").value
+      // TODO: get the quantity
+      // TODO: using those, add one item to the Cart
+      let UserAddedProduct = new CartItem(product, quantity)
+      console.log(UserAddedProduct)
+      state.cart.items.push(UserAddedProduct)
+      console.log(state.cart.items)
+    }
+  }
 }
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
-  let InputValueOfQuanity = document.getElementById("quantity").value
-  let SelectedItem = document.querySelector("select").value
+  let quantity = document.getElementById("quantity").value
+  let product = document.querySelector("select").value
 
   // TODO: Add a new element to the cartContents div with that information
   let cartContentsDiv = document.getElementById("cartContents");
   for (let i = 0; i < state.allProducts.length; i++) {
-    if (state.allProducts[i].name === SelectedItem) {
-      for (let j = 0; j < InputValueOfQuanity; j++) {
+    if (state.allProducts[i].name === product) {
+      for (let j = 0; j < quantity; j++) {
         let ImageForProductSelected = document.createElement("img");
         ImageForProductSelected.src = state.allProducts[i].filePath;
-        cartContentsDiv.append(ImageForProductSelected)
+        cartContentsDiv.append(ImageForProductSelected);
       }
     }
   }
@@ -81,3 +82,5 @@ catalogForm.addEventListener('submit', handleSubmit);
 // Before anything else of value can happen, we need to fill in the select
 // drop down list in the form.
 populateForm();
+
+
