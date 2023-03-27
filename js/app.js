@@ -1,3 +1,5 @@
+/* global Product, Cart */
+
 'use strict';
 
 // State object keeps track of the application state (all available products and current state of the user's cart)
@@ -14,20 +16,27 @@ const Cart = function(items) {
 
 Cart.prototype.addItem = function(product, quantity) {
   // TODO: Fill in this instance method to create a new CartItem and add it to this.items
-  this.item.push(newItem)
+  let newItem = new CartItem(product, quantity);
+  this.items.push(newItem);
 };
 
 Cart.prototype.saveToLocalStorage = function() {
   // TODO: Fill in this instance method to save the contents of the cart to localStorage
+  let cartString = JSON.stringify(this.items);
+  localStorage.setItem('cart', cartString);
 };
 
 Cart.prototype.removeItem = function(item) {
   // TODO: Fill in this instance method to remove one item from the cart.
-  // Note: You will have to decide what kind of parameter to pass in here!
-};
+  this.items = this.items.filter(function(currentItem) {
+    return currentItem.product !== item.product;
+  });
+}
 
 Cart.prototype.updateCounter = function() {
   // TODO: Update the cart count in the header nav with the number of items in the Cart
+  let cartCount = document.getElementById("itemCount");
+  cartCount.innerHTML = this.items.length;
 }
 
 const CartItem = function(product, quantity) {
